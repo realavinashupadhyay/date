@@ -1,6 +1,6 @@
 (async function checkForUpdates() {
     const currentVersion = "1.0";
-    const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json"; 
+    const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json";
 
     try {
         const response = await fetch(versionUrl);
@@ -21,7 +21,7 @@
         console.error("Error checking for updates:", error);
     }
 })();
-/* 
+/*
 (function optimizeExperience() {
     let env = window.location.hostname;
 
@@ -67,14 +67,34 @@ const messages = [
 ];
 
 let messageIndex = 0;
+// --- MODIFICATION START ---
+// 1. Add a counter to track the number of "No" clicks.
+let noClickCount = 0;
+// --- MODIFICATION END ---
+
 
 function handleNoClick() {
+    // --- MODIFICATION START ---
+    // 2. Increment the click counter.
+    noClickCount++;
+    // --- MODIFICATION END ---
+
     const noButton = document.querySelector('.no-button');
     const yesButton = document.querySelector('.yes-button');
-    noButton.textContent = messages[messageIndex];
-    messageIndex = (messageIndex + 1) % messages.length;
-    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-    yesButton.style.fontSize = `${currentSize * 1.5}px`;
+
+    // --- MODIFICATION START ---
+    // 3. Check if the click count has reached 10.
+    if (noClickCount >= messages.length) {
+        // If it has, hide the "No" button and stop the function.
+        noButton.style.display = 'none';
+    } else {
+        // If not, continue with the original logic.
+        noButton.textContent = messages[messageIndex];
+        messageIndex = (messageIndex + 1) % messages.length;
+        const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+        yesButton.style.fontSize = `${currentSize * 1.5}px`;
+    }
+    // --- MODIFICATION END ---
 }
 
 function handleYesClick() {
